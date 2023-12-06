@@ -69,7 +69,7 @@ class _LoginViewState extends State<LoginView> {
 
                 const SizedBox(height: 25),
 
-                CustomButton(sText: "Inicar sesión", onTap: null),
+                CustomButton(sText: "Inicar sesión", onTap: () => iniciarSesion(tecEmail.text, tecPasswd.text)),
 
                 const SizedBox(height: 25),
 
@@ -98,5 +98,10 @@ class _LoginViewState extends State<LoginView> {
   }
   void goToRegister() {
     Navigator.of(context).popAndPushNamed("/registerview");
+  }
+
+  void iniciarSesion(String email, String password){
+    DataHolder().fbadmin.iniciarSesion(email, password);
+    Navigator.of(context).popAndPushNamed("/homeview");
   }
 }
