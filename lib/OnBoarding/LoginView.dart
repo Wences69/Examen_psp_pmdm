@@ -58,7 +58,7 @@ class _LoginViewState extends State<LoginView> {
                       isPasswordVisible
                           ? Icons.visibility
                           : Icons.visibility_off,
-                      color: Colors.white,
+                      color: Theme.of(context).colorScheme.inversePrimary,
                     ),
                     onPressed: () {
                       setState(() {
@@ -70,7 +70,7 @@ class _LoginViewState extends State<LoginView> {
 
                 const SizedBox(height: 25),
 
-                CustomButton(sText: "Inicar sesión", onTap: login),
+                CustomButton(sText: "Inicar sesión", onTap: null),
 
                 const SizedBox(height: 25),
 

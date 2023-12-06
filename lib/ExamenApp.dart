@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'Modos/DarkMode.dart';
+import 'Modos/LightMode.dart';
 import 'OnBoarding/LoginView.dart';
 import 'OnBoarding/RegisterView.dart';
 import 'Splash/SplashView.dart';
@@ -18,7 +20,9 @@ class ExamenApp extends StatelessWidget {
         '/registerview': (context) => RegisterView(),
         '/splashview': (context) => SplashView()
       },
-      initialRoute: '/splashview',
+      initialRoute: '/loginview',
+      theme: LightMode,
+      darkTheme: DarkMode,
     );
   }
 }
