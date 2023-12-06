@@ -107,8 +107,12 @@ class _LoginViewState extends State<LoginView> {
     if(errorMessage.isNotEmpty){
       CustomSnackbar(sMensaje: errorMessage).show(context);
     }
-    DataHolder().fbadmin.iniciarSesion(email, password);
-    Navigator.of(context).popAndPushNamed("/homeview");
+
+    else if(errorMessage.isEmpty) {
+      DataHolder().fbadmin.iniciarSesion(email, password);
+      Navigator.of(context).popAndPushNamed("/homeview");
+
+    }
   }
 
   String checkFields() {
