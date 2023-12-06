@@ -1,6 +1,7 @@
 import 'package:examen_oscar_rueda/Singletone/DataHolder.dart';
 import 'package:flutter/material.dart';
 import '../CustomViews/CustomButton.dart';
+import '../CustomViews/CustomSnackbar.dart';
 import '../CustomViews/CustomTextField.dart';
 
 class LoginView extends StatefulWidget {
@@ -101,7 +102,30 @@ class _LoginViewState extends State<LoginView> {
   }
 
   void iniciarSesion(String email, String password){
+    String errorMessage = checkFields();
+
+    if(errorMessage.isNotEmpty){
+      CustomSnackbar(sMensaje: errorMessage).show(context);
+    }
     DataHolder().fbadmin.iniciarSesion(email, password);
     Navigator.of(context).popAndPushNamed("/homeview");
+  }
+
+  String checkFields() {
+    StringBuffer errorMessage = StringBuffer();
+
+    if (tecEmail.text.isEmpty && tecPasswd.text.isEmpty) {
+      errorMessage.write('Por favor, complete todos los campos');
+    }
+
+    else if (tecEmail.text.isEmpty) {
+      errorMessage.write('Por favor, complete el campo de correo electrónico');
+    }
+
+    else if (tecPasswd.text.isEmpty) {
+      errorMessage.write('Por favor, complete el campo de contraseña');
+    }
+
+    return errorMessage.toString();
   }
 }

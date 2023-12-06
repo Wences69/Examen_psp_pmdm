@@ -2,6 +2,7 @@ import 'package:examen_oscar_rueda/Singletone/DataHolder.dart';
 import 'package:flutter/material.dart';
 
 import '../CustomViews/CustomButton.dart';
+import '../CustomViews/CustomSnackbar.dart';
 import '../CustomViews/CustomTextField.dart';
 
 class RegisterView extends StatefulWidget {
@@ -117,7 +118,36 @@ class _RegisterViewState extends State<RegisterView> {
   }
 
   void registrarUsuario(String email, String password) {
-    DataHolder().fbadmin.registrarUsuario(email, password);
-    Navigator.of(context).popAndPushNamed("/homeview");
+    String errorMessage = checkFields();
+
+    if(errorMessage.isNotEmpty){
+      CustomSnackbar(sMensaje: errorMessage).show(context);
+    }
+    else if(errorMessage.isEmpty){
+      DataHolder().fbadmin.registrarUsuario(tecEmail.text, tecPasswd.text);
+      Navigator.of(context).popAndPushNamed("/homeview");
+    }
+  }
+
+  String checkFields() {
+    StringBuffer errorMessage = StringBuffer();
+
+    if (tecEmail.text.isEmpty && tecPasswd.text.isEmpty && tecConfirmPasswd.text.isEmpty) {
+      errorMessage.write('Por favor, complete todos los campos');
+    }
+
+    else if (tecEmail.text.isEmpty) {
+      errorMessage.write('Por favor, complete el campo de correo electrónico');
+    }
+
+    else if (tecPasswd.text.isEmpty) {
+      errorMessage.write('Por favor, complete el campo de contraseña');
+    }
+
+    else if (tecConfirmPasswd.text.isEmpty) {
+      errorMessage.write('Por favor, complete el campo de confirmación de contraseña');
+    }
+
+    return errorMessage.toString();
   }
 }
