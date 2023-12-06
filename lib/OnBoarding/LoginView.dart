@@ -3,15 +3,25 @@ import 'package:flutter/material.dart';
 import '../CustomViews/CustomButton.dart';
 import '../CustomViews/CustomTextField.dart';
 
-class LoginView extends StatelessWidget {
+class LoginView extends StatefulWidget {
+  void Function()? onTap;
+
   LoginView({Key? key}) : super(key: key);
 
+  @override
+  _LoginViewState createState() => _LoginViewState();
+}
+
+class _LoginViewState extends State<LoginView> {
   final TextEditingController tecEmail = TextEditingController();
   final TextEditingController tecPasswd = TextEditingController();
+
+  bool isPasswordVisible = false;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Theme.of(context).colorScheme.background,
       body: Center(
         child: SingleChildScrollView(
           child: Padding(
@@ -22,7 +32,7 @@ class LoginView extends StatelessWidget {
                 Icon(
                   Icons.lock,
                   size: 80,
-                  color: Colors.black
+                  color: Theme.of(context).colorScheme.inversePrimary,
                 ),
 
                 const SizedBox(height: 25),
@@ -41,13 +51,26 @@ class LoginView extends StatelessWidget {
 
                 CustomTextField(
                   sHint: "Contraseña",
-                  blIsPasswd: false,
+                  blIsPasswd: !isPasswordVisible,
                   tecControler: tecPasswd,
+                  iconButton: IconButton(
+                    icon: Icon(
+                      isPasswordVisible
+                          ? Icons.visibility
+                          : Icons.visibility_off,
+                      color: Colors.white,
+                    ),
+                    onPressed: () {
+                      setState(() {
+                        isPasswordVisible = !isPasswordVisible;
+                      });
+                    },
+                  ),
                 ),
 
                 const SizedBox(height: 25),
 
-                CustomButton(sText: "Login", onTap: null),
+                CustomButton(sText: "Inicar sesión", onTap: login),
 
                 const SizedBox(height: 25),
 
@@ -60,7 +83,7 @@ class LoginView extends StatelessWidget {
                             color: Theme.of(context).colorScheme.inversePrimary)),
                     GestureDetector(
                       child: Text(
-                        " Registrate aquí",
+                        " Registrate aqui",
                         style: TextStyle(fontWeight: FontWeight.bold),
                       ),
                     )
