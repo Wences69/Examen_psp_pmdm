@@ -39,14 +39,6 @@ class RegisterView extends StatelessWidget {
                 const SizedBox(height: 50),
 
                 CustomTextField(
-                  sHint: "Nombre",
-                  blIsPasswd: false,
-                  tecControler: tecUsername,
-                ),
-
-                const SizedBox(height: 10),
-
-                CustomTextField(
                   sHint: "Correo electrónico",
                   blIsPasswd: false,
                   tecControler: tecEmail,
@@ -63,7 +55,7 @@ class RegisterView extends StatelessWidget {
                 const SizedBox(height: 10),
 
                 CustomTextField(
-                  sHint: "Confirm Password",
+                  sHint: "Confirmar contraseña",
                   blIsPasswd: true,
                   tecControler: tecConfirmPasswd,
                 ),
