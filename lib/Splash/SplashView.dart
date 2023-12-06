@@ -1,3 +1,5 @@
+import 'package:examen_oscar_rueda/Singletone/DataHolder.dart';
+import 'package:examen_oscar_rueda/Singletone/FirebaseAdmin.dart';
 import 'package:flutter/material.dart';
 
 class SplashView extends StatelessWidget{
