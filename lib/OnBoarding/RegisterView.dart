@@ -1,3 +1,4 @@
+import 'package:examen_oscar_rueda/Singletone/DataHolder.dart';
 import 'package:flutter/material.dart';
 
 import '../CustomViews/CustomButton.dart';
@@ -81,7 +82,7 @@ class _RegisterViewState extends State<RegisterView> {
 
                 const SizedBox(height: 25),
 
-                CustomButton(sText: "Registrate", onTap: null),
+                CustomButton(sText: "Registrate", onTap: () => registrarUsuario(tecEmail.text, tecPasswd.text)),
 
                 const SizedBox(height: 25),
 
@@ -113,5 +114,10 @@ class _RegisterViewState extends State<RegisterView> {
   }
   void goToLogin() {
     Navigator.of(context).popAndPushNamed("/loginview");
+  }
+
+  void registrarUsuario(String email, String password) {
+    DataHolder().fbadmin.registrarUsuario(email, password);
+    Navigator.of(context).popAndPushNamed("/homeview");
   }
 }
