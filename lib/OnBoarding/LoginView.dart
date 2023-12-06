@@ -82,8 +82,9 @@ class _LoginViewState extends State<LoginView> {
                         style: TextStyle(
                             color: Theme.of(context).colorScheme.inversePrimary)),
                     GestureDetector(
+                      onTap: goToRegister,
                       child: Text(
-                        " Registrate aqui",
+                        " Registrate aquí",
                         style: TextStyle(fontWeight: FontWeight.bold),
                       ),
                     )
@@ -95,5 +96,8 @@ class _LoginViewState extends State<LoginView> {
         ),
       ),
     );
+  }
+  void goToRegister() {
+    Navigator.of(context).popAndPushNamed("/registerview");
   }
 }

@@ -46,7 +46,7 @@ class _RegisterViewState extends State<RegisterView> {
                 const SizedBox(height: 50),
 
                 CustomTextField(
-                  sHint: "Email",
+                  sHint: "Correo electrónico",
                   blIsPasswd: false,
                   tecControler: tecEmail,
                 ),
@@ -54,7 +54,7 @@ class _RegisterViewState extends State<RegisterView> {
                 const SizedBox(height: 10),
 
                 CustomTextField(
-                  sHint: "Password",
+                  sHint: "Contraseña",
                   blIsPasswd: !isPasswordVisible,
                   tecControler: tecPasswd,
                   iconButton: IconButton(
@@ -75,7 +75,7 @@ class _RegisterViewState extends State<RegisterView> {
                 const SizedBox(height: 10),
 
                 CustomTextField(
-                  sHint: "Confirm Password",
+                  sHint: "Confirmar contraseña",
                   blIsPasswd: true,
                   tecControler: tecConfirmPasswd,
                 ),
@@ -97,9 +97,9 @@ class _RegisterViewState extends State<RegisterView> {
                       ),
                     ),
                     GestureDetector(
-                      onTap: widget.onTap,
+                      onTap: goToLogin,
                       child: Text(
-                        " Registrate aquí",
+                        " Inicia sesión aquí",
                         style: TextStyle(fontWeight: FontWeight.bold),
                       ),
                     )
@@ -111,5 +111,8 @@ class _RegisterViewState extends State<RegisterView> {
         ),
       ),
     );
+  }
+  void goToLogin() {
+    Navigator.of(context).popAndPushNamed("/loginview");
   }
 }
