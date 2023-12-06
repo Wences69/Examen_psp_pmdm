@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
-
 import '../CustomViews/CustomButton.dart';
 import '../CustomViews/CustomTextField.dart';
 
 class LoginView extends StatefulWidget {
-  void Function()? onTap;
 
   LoginView({Key? key}) : super(key: key);
 

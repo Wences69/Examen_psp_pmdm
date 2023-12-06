@@ -4,7 +4,6 @@ import '../CustomViews/CustomButton.dart';
 import '../CustomViews/CustomTextField.dart';
 
 class RegisterView extends StatefulWidget {
-  void Function()? onTap;
 
   RegisterView({Key? key});
 

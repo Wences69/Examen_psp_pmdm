@@ -5,6 +5,11 @@ class SplashView extends StatelessWidget{
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(body: Text('Splash'));
+    return Scaffold(
+        backgroundColor: Theme.of(context).colorScheme.background,
+        body: Center(
+            child: Icon(Icons.icecream_rounded)
+        )
+    );
   }
 }
