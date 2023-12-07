@@ -5,7 +5,6 @@ import '../CustomViews/CustomSnackbar.dart';
 import '../CustomViews/CustomTextField.dart';
 
 class LoginView extends StatefulWidget {
-
   LoginView({Key? key}) : super(key: key);
 
   @override
@@ -97,9 +96,14 @@ class _LoginViewState extends State<LoginView> {
       ),
     );
   }
+
+  // Gestiona el texto de ¿No tienes cuenta? Registrate aquí
+
   void goToRegister() {
     Navigator.of(context).popAndPushNamed("/registerview");
   }
+
+  // Gestiona el boton de inicar sesión
 
   void iniciarSesion(String email, String password){
     String errorMessage = checkFields();
@@ -107,7 +111,6 @@ class _LoginViewState extends State<LoginView> {
     if(errorMessage.isNotEmpty){
       CustomSnackbar(sMensaje: errorMessage).show(context);
     }
-
     else if (errorMessage.isEmpty) {
       Future<String?> result = DataHolder().fbadmin.iniciarSesion(tecEmail.text, tecPasswd.text);
       result.then((mensajeError) {
@@ -121,21 +124,19 @@ class _LoginViewState extends State<LoginView> {
     }
   }
 
+  // Comprueba que todos los campos del login esten completos
+
   String checkFields() {
     StringBuffer errorMessage = StringBuffer();
-
     if (tecEmail.text.isEmpty && tecPasswd.text.isEmpty) {
       errorMessage.write('Por favor, complete todos los campos');
     }
-
     else if (tecEmail.text.isEmpty) {
       errorMessage.write('Por favor, complete el campo de correo electrónico');
     }
-
     else if (tecPasswd.text.isEmpty) {
       errorMessage.write('Por favor, complete el campo de contraseña');
     }
-
     return errorMessage.toString();
   }
 }

@@ -5,7 +5,6 @@ import '../CustomViews/CustomSnackbar.dart';
 import '../CustomViews/CustomTextField.dart';
 
 class RegisterView extends StatefulWidget {
-
   RegisterView({Key? key});
 
   @override
@@ -112,9 +111,14 @@ class _RegisterViewState extends State<RegisterView> {
       ),
     );
   }
+
+  // Gestiona el texto de ¿Ya tienes una cuenta? Inicia sesión aquí
+
   void goToLogin() {
     Navigator.of(context).popAndPushNamed("/loginview");
   }
+
+  // Gestiona el boton de registrarse
 
   void registrarUsuario(String email, String password) {
     String errorMessage = checkFields();
@@ -122,7 +126,6 @@ class _RegisterViewState extends State<RegisterView> {
     if(errorMessage.isNotEmpty){
       CustomSnackbar(sMensaje: errorMessage).show(context);
     }
-
     else if (errorMessage.isEmpty) {
       Future<String?> result = DataHolder().fbadmin.registrarUsuario(tecEmail.text, tecPasswd.text);
       result.then((mensajeError) {
@@ -135,29 +138,25 @@ class _RegisterViewState extends State<RegisterView> {
     }
   }
 
+  // Comprueba que todos los campos del register esten completos, la ultima comprobación comprueba que las contraseñas coincidan
+
   String checkFields() {
     StringBuffer errorMessage = StringBuffer();
-
     if (tecEmail.text.isEmpty && tecPasswd.text.isEmpty && tecConfirmPasswd.text.isEmpty) {
       errorMessage.write('Por favor, complete todos los campos');
     }
-
     else if (tecEmail.text.isEmpty) {
       errorMessage.write('Por favor, complete el campo de correo electrónico');
     }
-
     else if (tecPasswd.text.isEmpty) {
       errorMessage.write('Por favor, complete el campo de contraseña');
     }
-
     else if (tecConfirmPasswd.text.isEmpty) {
       errorMessage.write('Por favor, complete el campo de confirmación de contraseña');
     }
-
     else if (tecPasswd.text != tecConfirmPasswd.text) {
       errorMessage.write('Las contraseñas no coinciden');
     }
-
     return errorMessage.toString();
   }
 }

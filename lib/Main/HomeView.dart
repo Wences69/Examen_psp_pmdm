@@ -1,7 +1,8 @@
+import 'package:examen_oscar_rueda/CustomViews/CustomBottomMenu.dart';
 import 'package:examen_oscar_rueda/CustomViews/CustomDrawer.dart';
 import 'package:examen_oscar_rueda/Singletone/DataHolder.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import '../OnBoarding/LoginView.dart';
 
@@ -11,6 +12,7 @@ class HomeView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     this._context = context;
+
     return Scaffold(
       backgroundColor: Theme.of(_context).colorScheme.background,
       appBar: AppBar(
@@ -19,10 +21,14 @@ class HomeView extends StatelessWidget {
         foregroundColor: Theme.of(_context).colorScheme.inversePrimary,
         elevation: 0,
       ),
-      drawer: CustomDrawer(fOnItemTap: homeViewDrawerOnTap),
+      drawer: CustomDrawer(fOnItemTap: onDrawerPressed),
+      bottomNavigationBar: CustomBottomMenu(onBotonesClicked: onBottomMenuPressed),
     );
   }
-  void homeViewDrawerOnTap(int indice) async {
+
+  // Gestion de los botones del Drawer
+
+  void onDrawerPressed(int indice) async {
     if(indice==0){
       Navigator.pop(_context);
     }
@@ -34,5 +40,17 @@ class HomeView extends StatelessWidget {
       Navigator.of(_context).pushAndRemoveUntil(MaterialPageRoute(builder: (BuildContext context) => LoginView()),
           ModalRoute.withName('/loginview'));
     }
+  }
+
+  // Gestion de los botones del BottomMenu
+
+  void onBottomMenuPressed(int indice) {
+      if(indice==0){
+      }
+      else if (indice==1){
+      }
+      else if (indice == 2) {
+        SystemNavigator.pop();
+      }
   }
 }

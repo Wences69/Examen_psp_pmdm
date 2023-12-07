@@ -2,17 +2,25 @@ import 'package:firebase_auth/firebase_auth.dart';
 
 class FirebaseAdmin {
 
+  // Devuelve el ID del usuario logeado
+
   String? getCurrentUserID(){
     return FirebaseAuth.instance.currentUser?.uid;
   }
+
+  // Devuelve el usuario logeado
 
   User? getCurrentUser(){
     return FirebaseAuth.instance.currentUser;
   }
 
+  // Devuelve una instancia de la base de datos de autentificación
+
   FirebaseAuth getFirebaseAuthInstance(){
     return FirebaseAuth.instance;
   }
+
+  // Incia sesión con un correo y una contraseña que se le pasa por parámetro
 
   Future<String?> iniciarSesion(String email, String password) async {
     String? errorMessage;
@@ -39,6 +47,8 @@ class FirebaseAdmin {
     return errorMessage;
   }
 
+  // Crea un usuario con un correo y una contraseña que se le pasa por parámetro
+
   Future<String?> registrarUsuario(String email, String password) async {
     String? errorMessage;
     try {
@@ -63,6 +73,8 @@ class FirebaseAdmin {
     }
     return errorMessage;
   }
+
+  // Cierra sesión
 
   void cerrarSesion() async {
     await FirebaseAuth.instance.signOut();
