@@ -108,9 +108,15 @@ class _LoginViewState extends State<LoginView> {
       CustomSnackbar(sMensaje: errorMessage).show(context);
     }
 
-    else if(errorMessage.isEmpty) {
-      DataHolder().fbadmin.iniciarSesion(email, password);
-      Navigator.of(context).popAndPushNamed("/homeview");
+    else if (errorMessage.isEmpty) {
+      Future<String?> result = DataHolder().fbadmin.iniciarSesion(tecEmail.text, tecPasswd.text);
+      result.then((mensajeError) {
+        if (mensajeError == null || mensajeError.isEmpty) {
+          Navigator.of(context).popAndPushNamed("/homeview");
+        } else {
+          CustomSnackbar(sMensaje: mensajeError).show(context);
+        }
+      });
     }
   }
 

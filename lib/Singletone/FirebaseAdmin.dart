@@ -29,6 +29,7 @@ class FirebaseAdmin {
         // Contraseña incorrecta
         errorMessage ='Contraseña incorrecta proporcionada para ese correo electrónico.';
       }
+      return errorMessage;
     }
   }
 
@@ -55,5 +56,9 @@ class FirebaseAdmin {
       errorMessage ='Error: $e';
     }
     return errorMessage;
+  }
+
+  void cerrarSesion() async {
+    await FirebaseAuth.instance.signOut();
   }
 }

@@ -6,7 +6,7 @@ ThemeData DarkMode = ThemeData(
         background: Colors.black,
         primary: Colors.grey.shade900,
         secondary: Colors.grey.shade800,
-        inversePrimary: Colors.grey.shade500
+        inversePrimary: Colors.grey.shade300
     ),
     textTheme: ThemeData.dark().textTheme.apply(
         bodyColor: Colors.grey[300],
