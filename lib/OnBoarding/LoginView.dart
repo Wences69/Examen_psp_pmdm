@@ -116,7 +116,8 @@ class _LoginViewState extends State<LoginView> {
         } else {
           CustomSnackbar(sMensaje: mensajeError).show(context);
         }
-      });
+      }
+      );
     }
   }
 

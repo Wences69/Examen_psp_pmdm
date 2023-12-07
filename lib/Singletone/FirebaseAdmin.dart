@@ -18,8 +18,8 @@ class FirebaseAdmin {
     String? errorMessage;
     try {
       final credential = await FirebaseAuth.instance.signInWithEmailAndPassword(
-          email: email,
-          password: password
+        email: email,
+        password: password,
       );
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
@@ -28,9 +28,15 @@ class FirebaseAdmin {
       } else if (e.code == 'wrong-password') {
         // Contraseña incorrecta
         errorMessage ='Contraseña incorrecta proporcionada para ese correo electrónico.';
+      } else {
+        // Otras excepciones de FirebaseAuth
+        errorMessage = 'Error de autenticación: ${e.message}';
       }
-      return errorMessage;
+    } catch (e) {
+      // Otras excepciones no relacionadas con FirebaseAuth
+      errorMessage ='Error: $e';
     }
+    return errorMessage;
   }
 
   Future<String?> registrarUsuario(String email, String password) async {
