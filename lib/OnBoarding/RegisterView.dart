@@ -123,11 +123,16 @@ class _RegisterViewState extends State<RegisterView> {
       CustomSnackbar(sMensaje: errorMessage).show(context);
     }
 
-    else if(errorMessage.isEmpty){
-      DataHolder().fbadmin.registrarUsuario(tecEmail.text, tecPasswd.text);
-      Navigator.of(context).popAndPushNamed("/homeview");
+    else if (errorMessage.isEmpty) {
+      Future<String?> result = DataHolder().fbadmin.registrarUsuario(tecEmail.text, tecPasswd.text);
+      result.then((mensajeError) {
+        if (mensajeError == null || mensajeError.isEmpty) {
+          Navigator.of(context).popAndPushNamed("/homeview");
+        } else {
+          CustomSnackbar(sMensaje: mensajeError).show(context);
+        }
+      });
     }
-
   }
 
   String checkFields() {
@@ -147,6 +152,10 @@ class _RegisterViewState extends State<RegisterView> {
 
     else if (tecConfirmPasswd.text.isEmpty) {
       errorMessage.write('Por favor, complete el campo de confirmación de contraseña');
+    }
+
+    else if (tecPasswd.text != tecConfirmPasswd.text) {
+      errorMessage.write('Las contraseñas no coinciden');
     }
 
     return errorMessage.toString();

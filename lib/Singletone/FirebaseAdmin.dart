@@ -14,7 +14,8 @@ class FirebaseAdmin {
     return FirebaseAuth.instance;
   }
 
-  void iniciarSesion(String email, String password) async {
+  Future<String?> iniciarSesion(String email, String password) async {
+    String? errorMessage;
     try {
       final credential = await FirebaseAuth.instance.signInWithEmailAndPassword(
           email: email,
@@ -22,14 +23,17 @@ class FirebaseAdmin {
       );
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
-        print('No user found for that email.');
+        // Correo no econtrado
+        errorMessage ='Ningún usuario encontrado para ese correo electrónico.';
       } else if (e.code == 'wrong-password') {
-        print('Wrong password provided for that user.');
+        // Contraseña incorrecta
+        errorMessage ='Contraseña incorrecta proporcionada para ese correo electrónico.';
       }
     }
   }
 
-  void registrarUsuario(String email, String password) async {
+  Future<String?> registrarUsuario(String email, String password) async {
+    String? errorMessage;
     try {
       final credential = await FirebaseAuth.instance.createUserWithEmailAndPassword(
         email: email,
@@ -37,12 +41,19 @@ class FirebaseAdmin {
       );
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
-        print('The password provided is too weak.');
+        // Contraseña débil
+        errorMessage ='La contraseña proporcionada es demasiado débil.';
       } else if (e.code == 'email-already-in-use') {
-        print('The account already exists for that email.');
+        // Correo electrónico ya en uso
+        errorMessage = 'La cuenta ya existe para ese correo electrónico.';
+      } else {
+        // Otras excepciones de FirebaseAuth
+        errorMessage = 'Error de autenticación: ${e.message}';
       }
     } catch (e) {
-      print(e);
+      // Otras excepciones no relacionadas con FirebaseAuth
+      errorMessage ='Error: $e';
     }
+    return errorMessage;
   }
 }

@@ -111,7 +111,6 @@ class _LoginViewState extends State<LoginView> {
     else if(errorMessage.isEmpty) {
       DataHolder().fbadmin.iniciarSesion(email, password);
       Navigator.of(context).popAndPushNamed("/homeview");
-
     }
   }
 
