@@ -1,6 +1,5 @@
 import 'package:examen_oscar_rueda/Singletone/DataHolder.dart';
 import 'package:flutter/material.dart';
-
 import '../CustomViews/CustomButton.dart';
 import '../CustomViews/CustomSnackbar.dart';
 import '../CustomViews/CustomTextField.dart';
@@ -123,10 +122,12 @@ class _RegisterViewState extends State<RegisterView> {
     if(errorMessage.isNotEmpty){
       CustomSnackbar(sMensaje: errorMessage).show(context);
     }
+
     else if(errorMessage.isEmpty){
       DataHolder().fbadmin.registrarUsuario(tecEmail.text, tecPasswd.text);
       Navigator.of(context).popAndPushNamed("/homeview");
     }
+
   }
 
   String checkFields() {

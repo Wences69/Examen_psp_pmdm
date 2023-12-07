@@ -1,6 +1,5 @@
 import 'package:examen_oscar_rueda/Main/HomeView.dart';
 import 'package:flutter/material.dart';
-
 import 'Modos/DarkMode.dart';
 import 'Modos/LightMode.dart';
 import 'OnBoarding/LoginView.dart';
@@ -22,7 +21,7 @@ class ExamenApp extends StatelessWidget {
         '/homeview' : (context) => HomeView(),
         '/splashview': (context) => SplashView()
       },
-      initialRoute: '/loginview',
+      initialRoute: '/splashview',
       theme: LightMode,
       darkTheme: DarkMode,
     );
