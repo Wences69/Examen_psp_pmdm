@@ -23,34 +23,43 @@ class HomeView extends StatelessWidget {
       ),
       drawer: CustomDrawer(fOnItemTap: onDrawerPressed),
       bottomNavigationBar: CustomBottomMenu(onBotonesClicked: onBottomMenuPressed),
+      floatingActionButton: FloatingActionButton(
+
+        onPressed: () => null,
+        backgroundColor: Theme.of(_context).colorScheme.secondary,
+        child: Icon(
+          Icons.add,
+          color: Theme.of(_context).colorScheme.inversePrimary,
+        ),
+      ),
     );
   }
 
   // Gestion de los botones del Drawer
 
   void onDrawerPressed(int indice) async {
-    if(indice==0){
+    if (indice == 0) {
       Navigator.pop(_context);
-    }
-    else if(indice==1){
-
-    }
-    else if(indice==2){
+    } else if (indice == 1) {
+      // Lógica para el botón 1 del Drawer
+    } else if (indice == 2) {
       DataHolder().fbadmin.cerrarSesion();
-      Navigator.of(_context).pushAndRemoveUntil(MaterialPageRoute(builder: (BuildContext context) => LoginView()),
-          ModalRoute.withName('/loginview'));
+      Navigator.of(_context).pushAndRemoveUntil(
+        MaterialPageRoute(builder: (BuildContext context) => LoginView()),
+        ModalRoute.withName('/loginview'),
+      );
     }
   }
 
   // Gestion de los botones del BottomMenu
 
   void onBottomMenuPressed(int indice) {
-      if(indice==0){
-      }
-      else if (indice==1){
-      }
-      else if (indice == 2) {
-        SystemNavigator.pop();
-      }
+    if (indice == 0) {
+      // Lógica para el botón 0 del BottomMenu
+    } else if (indice == 1) {
+      // Lógica para el botón 1 del BottomMenu
+    } else if (indice == 2) {
+      SystemNavigator.pop(); // Cerrar la aplicación
+    }
   }
 }
