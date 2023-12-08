@@ -7,17 +7,21 @@ class CustomTextField extends StatelessWidget {
   final IconButton? iconButton;
 
   const CustomTextField({
-    super.key,
+    Key? key,
     required this.sHint,
     required this.blIsPasswd,
     required this.tecControler,
     this.iconButton
-  });
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return TextField(
       controller: tecControler,
+      cursorColor: Theme.of(context).colorScheme.inversePrimary,
+      obscureText: blIsPasswd,
+      enableSuggestions: !blIsPasswd,
+      autocorrect: !blIsPasswd,
       decoration: InputDecoration(
           border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(12)
@@ -25,7 +29,6 @@ class CustomTextField extends StatelessWidget {
           hintText: sHint,
           suffixIcon: iconButton
       ),
-      obscureText: blIsPasswd,
     );
   }
 }

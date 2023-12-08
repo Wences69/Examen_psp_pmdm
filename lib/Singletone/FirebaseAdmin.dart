@@ -1,6 +1,9 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:examen_oscar_rueda/FirestoreObjects/FbPost.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class FirebaseAdmin {
+  FirebaseFirestore db = FirebaseFirestore.instance;
 
   // Devuelve el ID del usuario logeado
 
@@ -78,5 +81,21 @@ class FirebaseAdmin {
 
   void cerrarSesion() async {
     await FirebaseAuth.instance.signOut();
+  }
+
+  // Descargar posts
+
+  Future<List<FbPost>> descargarPosts() async {
+    CollectionReference<FbPost> ref = db.collection("Posts").withConverter(
+      fromFirestore: FbPost.fromFirestore,
+      toFirestore: (FbPost post, _) => post.toFirestore(),
+    );
+
+    QuerySnapshot<FbPost> querySnapshot = await ref.get();
+
+    // Mapear los documentos a objetos FbPost y devolver una lista
+    List<FbPost> posts = querySnapshot.docs.map((doc) => doc.data()).toList();
+
+    return posts;
   }
 }
