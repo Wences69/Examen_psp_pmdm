@@ -2,24 +2,21 @@ import 'package:flutter/material.dart';
 
 class CustomSnackbar {
   final String sMensaje;
-  final Color cBackgroundColor;
-  final Color cTextColor;
   final Duration duration = const Duration(seconds: 3);
   final SnackBarBehavior behavior = SnackBarBehavior.floating;
 
   CustomSnackbar({
+    Key? key,
     required this.sMensaje,
-    this.cBackgroundColor = Colors.red,
-    this.cTextColor = Colors.black,
   });
 
   void show(BuildContext context) {
     final snackBar = SnackBar(
       content: Text(sMensaje,
-        style: TextStyle(
-            color: cTextColor),
+        style: const TextStyle(
+            color: Colors.red),
       ),
-      backgroundColor: cBackgroundColor,
+      backgroundColor: Colors.black,
       duration: duration,
       behavior: behavior,
     );

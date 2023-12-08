@@ -1,6 +1,6 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:examen_oscar_rueda/CustomViews/CustomBottomMenu.dart';
 import 'package:examen_oscar_rueda/CustomViews/CustomDrawer.dart';
+import 'package:examen_oscar_rueda/CustomViews/PostGridView.dart';
 import 'package:examen_oscar_rueda/CustomViews/PostListView.dart';
 import 'package:examen_oscar_rueda/Singletone/DataHolder.dart';
 import 'package:flutter/material.dart';
@@ -10,13 +10,15 @@ import '../FirestoreObjects/FbPost.dart';
 import '../OnBoarding/LoginView.dart';
 
 class HomeView extends StatefulWidget {
+  const HomeView({Key? key}) : super(key: key);
+
   @override
   State<HomeView> createState() => _HomeViewState();
 }
 
 class _HomeViewState extends State<HomeView> {
   final List<FbPost> posts = [];
-  FirebaseFirestore db = FirebaseFirestore.instance;
+  bool blIsList = false;
 
   @override
   void initState() {
@@ -38,16 +40,11 @@ class _HomeViewState extends State<HomeView> {
         backgroundColor: Colors.transparent,
         elevation: 0,
       ),
-      body: ListView.separated(
-        padding: EdgeInsets.all(8),
-        separatorBuilder: separadorLista,
-        itemBuilder: itemListBuilder,
-        itemCount: posts.length,
-      ),
+      body: listOrGrid(blIsList),
       drawer: CustomDrawer(fOnItemTap: onDrawerPressed),
       bottomNavigationBar: CustomBottomMenu(onBotonesClicked: onBottomMenuPressed),
       floatingActionButton: FloatingActionButton(
-        onPressed: () => null,
+        onPressed: () {},
         backgroundColor: Theme.of(context).colorScheme.secondary,
         child: Icon(
           Icons.add,
@@ -67,7 +64,7 @@ class _HomeViewState extends State<HomeView> {
     } else if (indice == 2) {
       DataHolder().fbadmin.cerrarSesion();
       Navigator.of(context).pushAndRemoveUntil(
-        MaterialPageRoute(builder: (BuildContext context) => LoginView()),
+        MaterialPageRoute(builder: (BuildContext context) => const LoginView()),
         ModalRoute.withName('/loginview'),
       );
     }
@@ -85,11 +82,21 @@ class _HomeViewState extends State<HomeView> {
     }
   }
 
+  // Creador de items en forma de celda
+
+  Widget? itemGridBuilder(BuildContext context, int index) {
+    return PostGridView(
+        sTitle: posts[index].title,
+        sBody: posts[index].body
+    );
+  }
+
   // Creador de items en forma de lista
 
   Widget? itemListBuilder(BuildContext context, int index) {
     return PostListView(
-        sText: posts[index].title,
+      sTitle: posts[index].title,
+      sBody: posts[index].body,
     );
   }
 
@@ -107,10 +114,30 @@ class _HomeViewState extends State<HomeView> {
   Future<void> cargarPosts() async {
     Future<List<FbPost>> futurePosts = DataHolder().fbadmin.descargarPosts();
     List<FbPost> listaPosts = await futurePosts;
-
     setState(() {
       posts.clear();
       posts.addAll(listaPosts);
     });
+
+  }
+
+  // Cambia entre ListView o GridView
+
+  Widget? listOrGrid(bool blIsList) {
+    if (blIsList) {
+      return ListView.separated(
+          padding: const EdgeInsets.all(8),
+          itemBuilder: itemListBuilder,
+          separatorBuilder: separadorLista,
+          itemCount: posts.length
+      );
+    }
+    else {
+      return GridView.builder(
+        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3),
+        itemBuilder: itemGridBuilder,
+        itemCount: posts.length,
+      );
+    }
   }
 }

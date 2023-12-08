@@ -4,9 +4,9 @@ class CustomDrawer extends StatelessWidget {
   final List<Widget> children;
   final String sName;
   final String sUsername;
-  void Function(int indice)? fOnItemTap;
+  final void Function(int indice)? fOnItemTap;
 
-  CustomDrawer({
+  const CustomDrawer({
     Key? key,
     required this.fOnItemTap,
     this.children = const [],
@@ -34,11 +34,11 @@ class CustomDrawer extends StatelessWidget {
                 ),
               ),
               currentAccountPicture: CircleAvatar(
+                backgroundColor: Theme.of(context).colorScheme.secondary,
                 child: Icon(
                   Icons.person,
                   color: Theme.of(context).colorScheme.inversePrimary,
                 ),
-                backgroundColor: Theme.of(context).colorScheme.secondary,
               ),
               decoration: BoxDecoration(
                 color: Theme.of(context).colorScheme.primary,

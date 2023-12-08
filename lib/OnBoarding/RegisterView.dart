@@ -5,7 +5,7 @@ import '../CustomViews/CustomSnackbar.dart';
 import '../CustomViews/CustomTextField.dart';
 
 class RegisterView extends StatefulWidget {
-  RegisterView({Key? key});
+  const RegisterView({Key? key}) : super(key: key);
 
   @override
   _RegisterViewState createState() => _RegisterViewState();
@@ -37,7 +37,7 @@ class _RegisterViewState extends State<RegisterView> {
 
                 const SizedBox(height: 25),
 
-                Text(
+                const Text(
                   "Registro de usuario",
                   style: TextStyle(fontSize: 20),
                 ),
@@ -97,7 +97,7 @@ class _RegisterViewState extends State<RegisterView> {
                     ),
                     GestureDetector(
                       onTap: goToLogin,
-                      child: Text(
+                      child: const Text(
                         " Inicia sesión aquí",
                         style: TextStyle(fontWeight: FontWeight.bold),
                       ),

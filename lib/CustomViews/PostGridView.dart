@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
-class PostListView extends StatelessWidget {
+class PostGridView extends StatelessWidget {
   final String sTitle;
   final String sBody;
 
-  const PostListView({
+  const PostGridView({
     Key? key,
     required this.sTitle,
     required this.sBody,
@@ -13,28 +13,30 @@ class PostListView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(16),
+      // Aquí puedes personalizar la apariencia de tu celda de publicación
+      margin: EdgeInsets.all(8.0),
+      padding: EdgeInsets.all(16.0),
       decoration: BoxDecoration(
         border: Border.all(
-          color: Theme.of(context).colorScheme.primary,
-          width: 2,
+          color: Colors.grey,
+          width: 1.0,
         ),
-        borderRadius: BorderRadius.circular(8),
+        borderRadius: BorderRadius.circular(8.0),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
             sTitle,
-            style: const TextStyle(
+            style: TextStyle(
+              fontSize: 18.0,
               fontWeight: FontWeight.bold,
-              fontSize: 18,
             ),
           ),
-          const SizedBox(height: 8),
+          SizedBox(height: 8.0),
           Text(
             sBody,
-            style: const TextStyle(fontSize: 16),
+            style: TextStyle(fontSize: 16.0),
           ),
         ],
       ),

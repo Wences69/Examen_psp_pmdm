@@ -5,7 +5,7 @@ import '../CustomViews/CustomSnackbar.dart';
 import '../CustomViews/CustomTextField.dart';
 
 class LoginView extends StatefulWidget {
-  LoginView({Key? key}) : super(key: key);
+  const LoginView({Key? key}) : super(key: key);
 
   @override
   _LoginViewState createState() => _LoginViewState();
@@ -36,7 +36,7 @@ class _LoginViewState extends State<LoginView> {
 
                 const SizedBox(height: 25),
 
-                Text(
+                const Text(
                   "Inicio de sesión",
                   style: TextStyle(fontSize: 20),
                 ),
@@ -82,7 +82,7 @@ class _LoginViewState extends State<LoginView> {
                             color: Theme.of(context).colorScheme.inversePrimary)),
                     GestureDetector(
                       onTap: goToRegister,
-                      child: Text(
+                      child: const Text(
                         " Registrate aquí",
                         style: TextStyle(fontWeight: FontWeight.bold),
                       ),
