@@ -18,7 +18,7 @@ class HomeView extends StatefulWidget {
 
 class _HomeViewState extends State<HomeView> {
   final List<FbPost> posts = [];
-  bool blIsList = false;
+  bool blIsList = true;
 
   @override
   void initState() {
@@ -42,7 +42,7 @@ class _HomeViewState extends State<HomeView> {
       ),
       body: listOrGrid(blIsList),
       drawer: CustomDrawer(fOnItemTap: onDrawerPressed),
-      bottomNavigationBar: CustomBottomMenu(onBotonesClicked: onBottomMenuPressed),
+      bottomNavigationBar: CustomBottomMenu(fOnItemTap: onBottomMenuPressed),
       floatingActionButton: FloatingActionButton(
         onPressed: () {},
         backgroundColor: Theme.of(context).colorScheme.secondary,
@@ -73,13 +73,15 @@ class _HomeViewState extends State<HomeView> {
   // Gestion de los botones del BottomMenu
 
   void onBottomMenuPressed(int indice) {
-    if (indice == 0) {
-      
-    } else if (indice == 1) {
-      
-    } else if (indice == 2) {
-      SystemNavigator.pop(); // Cerrar la aplicación
-    }
+    setState(() {
+      if (indice == 0) {
+        blIsList = true;
+      } else if (indice == 1) {
+        blIsList = false;
+      } else if (indice == 2) {
+        SystemNavigator.pop(); // Cerrar la aplicación
+      }
+    });
   }
 
   // Creador de items en forma de celda

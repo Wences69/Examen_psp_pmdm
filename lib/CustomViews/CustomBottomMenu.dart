@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
 class CustomBottomMenu extends StatelessWidget {
-  CustomBottomMenu({Key? key, required this.onBotonesClicked}) : super(key: key);
-  Function(int indice)? onBotonesClicked;
+  CustomBottomMenu({Key? key, required this.fOnItemTap}) : super(key: key);
+  Function(int indice)? fOnItemTap;
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +23,7 @@ class CustomBottomMenu extends StatelessWidget {
           children: [
 
             ElevatedButton.icon(
-              onPressed: () => onBotonesClicked!(0),
+              onPressed: () => fOnItemTap!(0),
               icon: Icon(
                   Icons.list,
                   color: Theme.of(context).colorScheme.inversePrimary,
@@ -40,7 +40,7 @@ class CustomBottomMenu extends StatelessWidget {
             ),
 
             ElevatedButton.icon(
-              onPressed: () => onBotonesClicked!(1),
+              onPressed: () => fOnItemTap!(1),
               icon: Icon(
                   Icons.grid_view,
                   color: Theme.of(context).colorScheme.inversePrimary
@@ -57,7 +57,7 @@ class CustomBottomMenu extends StatelessWidget {
             ),
 
             ElevatedButton.icon(
-              onPressed: () => onBotonesClicked!(2),
+              onPressed: () => fOnItemTap!(2),
               icon: Icon(
                   Icons.exit_to_app,
                   color: Theme.of(context).colorScheme.inversePrimary
