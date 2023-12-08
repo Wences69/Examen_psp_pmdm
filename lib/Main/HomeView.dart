@@ -84,12 +84,21 @@ class _HomeViewState extends State<HomeView> {
     });
   }
 
+  // Gestiona el post seleccionado
+
+  void onPostPressed(int index) {
+    DataHolder().selectedPost = posts[index];
+    Navigator.of(context).pushNamed("/postview");
+  }
+
   // Creador de items en forma de celda
 
   Widget? itemGridBuilder(BuildContext context, int index) {
     return PostGridView(
         sTitle: posts[index].title,
-        sBody: posts[index].body
+        sBody: posts[index].body,
+        iPosicion: index,
+        fOnItemTap: onPostPressed
     );
   }
 
@@ -99,6 +108,8 @@ class _HomeViewState extends State<HomeView> {
     return PostListView(
       sTitle: posts[index].title,
       sBody: posts[index].body,
+      iPosicion: index,
+      fOnItemTap: onPostPressed
     );
   }
 
