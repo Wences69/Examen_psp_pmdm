@@ -44,7 +44,9 @@ class _LoginViewState extends State<LoginView> {
                 const SizedBox(height: 50),
 
                 CustomTextField(
-                    sHint: "Correo electrónico", blIsPasswd: false, tecControler: tecEmail),
+                    sHint: "Correo electrónico",
+                    blIsPasswd: false,
+                    tecControler: tecEmail),
 
                 const SizedBox(height: 10),
 
@@ -69,7 +71,10 @@ class _LoginViewState extends State<LoginView> {
 
                 const SizedBox(height: 25),
 
-                CustomButton(sText: "Inicar sesión", onTap: () => iniciarSesion(tecEmail.text, tecPasswd.text)),
+                CustomButton(
+                  onTap: () => iniciarSesion(tecEmail.text, tecPasswd.text),
+                  sText: "Inicar sesión",
+                ),
 
                 const SizedBox(height: 25),
 

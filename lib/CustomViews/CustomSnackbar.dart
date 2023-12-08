@@ -12,11 +12,13 @@ class CustomSnackbar {
 
   void show(BuildContext context) {
     final snackBar = SnackBar(
-      content: Text(sMensaje,
+      content: Text(
+        sMensaje,
         style: const TextStyle(
-            color: Colors.red),
+            color: Colors.black
+        ),
       ),
-      backgroundColor: Colors.black,
+      backgroundColor: Colors.red,
       duration: duration,
       behavior: behavior,
     );

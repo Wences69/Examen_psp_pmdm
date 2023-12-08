@@ -44,7 +44,10 @@ class _HomeViewState extends State<HomeView> {
       drawer: CustomDrawer(fOnItemTap: onDrawerPressed),
       bottomNavigationBar: CustomBottomMenu(fOnItemTap: onBottomMenuPressed),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () {
+          Navigator.of(context).pushNamed("/postcreateview");
+        },
+        elevation: 0,
         backgroundColor: Theme.of(context).colorScheme.secondary,
         child: Icon(
           Icons.add,
@@ -137,8 +140,9 @@ class _HomeViewState extends State<HomeView> {
   // Cambia entre ListView o GridView
 
   Widget? listOrGrid(bool blIsList) {
+    late Widget builder;
     if (blIsList) {
-      return ListView.separated(
+      builder = ListView.separated(
           padding: const EdgeInsets.all(8),
           itemBuilder: itemListBuilder,
           separatorBuilder: separadorLista,
@@ -146,11 +150,12 @@ class _HomeViewState extends State<HomeView> {
       );
     }
     else {
-      return GridView.builder(
+      builder = GridView.builder(
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3),
         itemBuilder: itemGridBuilder,
         itemCount: posts.length,
       );
     }
+    return builder;
   }
 }

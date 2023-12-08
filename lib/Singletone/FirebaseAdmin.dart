@@ -98,4 +98,15 @@ class FirebaseAdmin {
 
     return posts;
   }
+
+  // Subir posts
+
+  subirPost(FbPost postNuevo) async {
+    CollectionReference<FbPost> postsRef = db.collection("Posts").withConverter(
+        fromFirestore: FbPost.fromFirestore,
+        toFirestore: (FbPost post, _) => post.toFirestore(),
+    );
+
+    await postsRef.add(postNuevo);
+  }
 }
