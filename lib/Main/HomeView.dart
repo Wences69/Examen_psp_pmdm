@@ -18,6 +18,7 @@ class HomeView extends StatefulWidget {
 
 class _HomeViewState extends State<HomeView> {
   final List<FbPost> posts = [];
+  late Future<List<FbPost>> futurePosts;
   bool blIsList = true;
 
   @override
@@ -87,11 +88,20 @@ class _HomeViewState extends State<HomeView> {
     });
   }
 
-  // Gestiona el post seleccionado
+  // Gestiona el click del post
 
   void onPostPressed(int index) {
     DataHolder().selectedPost = posts[index];
     Navigator.of(context).pushNamed("/postview");
+  }
+
+  // Gestiona el click mantenido del post
+
+  void onPostLongPressed(int index) {
+    DataHolder().selectedPost = posts[index];
+    DataHolder().selectedPostIdex = index;
+    Navigator.of(context).pushNamed("/posteditview");
+    print("Índice del post presionado: $index");
   }
 
   // Creador de items en forma de celda
@@ -101,7 +111,8 @@ class _HomeViewState extends State<HomeView> {
         sTitle: posts[index].title,
         sBody: posts[index].body,
         iPosicion: index,
-        fOnItemTap: onPostPressed
+        fOnItemTap: onPostPressed,
+        fOnItemLongPressed: onPostLongPressed
     );
   }
 
@@ -109,10 +120,11 @@ class _HomeViewState extends State<HomeView> {
 
   Widget? itemListBuilder(BuildContext context, int index) {
     return PostListView(
-      sTitle: posts[index].title,
-      sBody: posts[index].body,
-      iPosicion: index,
-      fOnItemTap: onPostPressed
+        sTitle: posts[index].title,
+        sBody: posts[index].body,
+        iPosicion: index,
+        fOnItemTap: onPostPressed,
+        fOnItemLongPressed: onPostLongPressed
     );
   }
 
@@ -128,7 +140,8 @@ class _HomeViewState extends State<HomeView> {
   // Llena la lista de posts
 
   Future<void> cargarPosts() async {
-    Future<List<FbPost>> futurePosts = DataHolder().fbadmin.descargarPosts();
+    futurePosts = DataHolder().fbadmin.descargarPosts();
+
     List<FbPost> listaPosts = await futurePosts;
     setState(() {
       posts.clear();

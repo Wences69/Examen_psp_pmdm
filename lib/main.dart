@@ -12,6 +12,6 @@ void main() async {
   );
 
   DataHolder().initDataHolder();
-  ExamenApp examenapp = ExamenApp();
+  ExamenApp examenapp = const ExamenApp();
   runApp(examenapp);
 }

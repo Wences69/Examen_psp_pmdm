@@ -5,6 +5,7 @@ class PostGridView extends StatelessWidget {
   final String sBody;
   final int iPosicion;
   final Function(int indice)? fOnItemTap;
+  final Function(int indice)? fOnItemLongPressed;
 
   const PostGridView({
     Key? key,
@@ -12,15 +13,17 @@ class PostGridView extends StatelessWidget {
     required this.sBody,
     required this.iPosicion,
     required this.fOnItemTap,
+    required this.fOnItemLongPressed
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () => fOnItemTap!(iPosicion),
+      onLongPress: () => fOnItemLongPressed!(iPosicion),
       child: Container(
-        margin: EdgeInsets.all(8.0),
-        padding: EdgeInsets.all(16.0),
+        margin: const EdgeInsets.all(8.0),
+        padding: const EdgeInsets.all(16.0),
         decoration: BoxDecoration(
           border: Border.all(
             color: Colors.grey,
@@ -33,15 +36,15 @@ class PostGridView extends StatelessWidget {
           children: [
             Text(
               sTitle,
-              style: TextStyle(
+              style: const TextStyle(
                 fontSize: 18.0,
                 fontWeight: FontWeight.bold,
               ),
             ),
-            SizedBox(height: 8.0),
+            const SizedBox(height: 8.0),
             Text(
               sBody,
-              style: TextStyle(fontSize: 16.0),
+              style: const TextStyle(fontSize: 16.0),
             ),
           ],
         ),

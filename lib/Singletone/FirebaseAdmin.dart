@@ -2,6 +2,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:examen_oscar_rueda/FirestoreObjects/FbPost.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
+import 'DataHolder.dart';
+
 class FirebaseAdmin {
   FirebaseFirestore db = FirebaseFirestore.instance;
 
@@ -101,12 +103,45 @@ class FirebaseAdmin {
 
   // Subir posts
 
-  subirPost(FbPost postNuevo) async {
+  void subirPost(FbPost postNuevo) async {
     CollectionReference<FbPost> postsRef = db.collection("Posts").withConverter(
         fromFirestore: FbPost.fromFirestore,
         toFirestore: (FbPost post, _) => post.toFirestore(),
     );
 
     await postsRef.add(postNuevo);
+  }
+
+  // Editar posts
+
+  void editarPost(String title, String body) {
+    // Realiza la consulta para encontrar el post con el título específico
+    FirebaseFirestore.instance
+        .collection('Posts')
+        .where('title', isEqualTo: DataHolder().selectedPost.title.trim())
+        .where('body', isEqualTo: DataHolder().selectedPost.body.trim())
+        .get()
+        .then((QuerySnapshot querySnapshot) {
+      if (querySnapshot.docs.isNotEmpty) {
+        // Se encontró al menos un documento con el título y cuerpo especificado
+        String postId = querySnapshot.docs.first.id;
+
+        // Edita el post con el id encontrado
+        FirebaseFirestore.instance.collection('Posts').doc(postId).update(
+          {
+            "title": title,
+            "body": body,
+          },
+        ).then((value) {
+          print('Post editado exitosamente');
+        }).catchError((error) {
+          print('Error al editar el post: $error');
+        });
+      } else {
+        // No se encontraron documentos con el título especificado
+      }
+    }).catchError((error) {
+      print('Error al realizar la consulta: $error');
+    });
   }
 }

@@ -1,16 +1,15 @@
-import 'package:examen_oscar_rueda/FirestoreObjects/FbPost.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:examen_oscar_rueda/Singletone/DataHolder.dart';
 import 'package:flutter/material.dart';
 
 import '../CustomViews/CustomButton.dart';
-import '../CustomViews/CustomSnackbar.dart';
 import '../CustomViews/CustomTextField.dart';
 
-class PostCreateView extends StatelessWidget {
-  PostCreateView({Key? key}) : super(key: key);
-
-  final TextEditingController tecTitle = TextEditingController();
-  final TextEditingController tecBody = TextEditingController();
+class PostEditView extends StatelessWidget {
+  PostEditView({Key? key}) : super(key: key);
+  TextEditingController tecTitle = TextEditingController(text: DataHolder().selectedPost.title);
+  TextEditingController tecBody = TextEditingController(text: DataHolder().selectedPost.body);
+  // String? selectedPostIndex = DataHolder().selectedPostIdex as String?;
   late BuildContext _context;
 
   @override
@@ -20,7 +19,7 @@ class PostCreateView extends StatelessWidget {
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.background,
       appBar: AppBar(
-        title: Text("Crea un nuevo post",
+        title: Text("Edita este post",
             style: TextStyle(
                 color: Theme.of(context).colorScheme.inversePrimary
             )
@@ -37,7 +36,7 @@ class PostCreateView extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 const Text(
-                  "Aquí puedes crear un post",
+                  "Estas en modo edición",
                   style: TextStyle(fontSize: 20),
                 ),
 
@@ -59,7 +58,7 @@ class PostCreateView extends StatelessWidget {
 
                 const SizedBox(height: 25),
 
-                CustomButton(sText: "Postear", onTap: crearPost),
+                CustomButton(sText: "Editar post", onTap: editarPost),
               ],
             ),
           ),
@@ -68,21 +67,11 @@ class PostCreateView extends StatelessWidget {
     );
   }
 
-  // Crea un nuevo post
+  // Editar posts
 
-  void crearPost() {
-    String errorMessage = checkFields();
-    if(errorMessage.isNotEmpty){
-      CustomSnackbar(sMensaje: errorMessage).show(_context);
-    }
-    else if (errorMessage.isEmpty) {
-      FbPost postNuevo = FbPost(
-          title: tecTitle.text,
-          body: tecBody.text
-      );
-      DataHolder().fbadmin.subirPost(postNuevo);
-      Navigator.pop(_context);
-    }
+  void editarPost() {
+    DataHolder().fbadmin.editarPost(tecTitle.text, tecBody.text);
+    Navigator.pop(_context);
   }
 
   // Comprueba que todos los campos del post estén completos

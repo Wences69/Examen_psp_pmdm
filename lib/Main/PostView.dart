@@ -9,7 +9,7 @@ class PostView extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.blue,
-        title: Text("Post"),
+        title: const Text("Post"),
         centerTitle: true,
       ),
       body: Padding(
@@ -20,16 +20,16 @@ class PostView extends StatelessWidget {
             // Título del post
             Text(
               DataHolder().selectedPost.title,
-              style: TextStyle(
+              style: const TextStyle(
                 fontSize: 24,
                 fontWeight: FontWeight.bold,
               ),
             ),
-            SizedBox(height: 12),
+            const SizedBox(height: 12),
             // Cuerpo del post
             Text(
               DataHolder().selectedPost.body,
-              style: TextStyle(fontSize: 18),
+              style: const TextStyle(fontSize: 18),
             ),
           ],
         ),

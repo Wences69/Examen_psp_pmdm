@@ -5,19 +5,22 @@ class PostListView extends StatelessWidget {
   final String sBody;
   final int iPosicion;
   final Function(int indice)? fOnItemTap;
+  final Function(int indice)? fOnItemLongPressed;
 
   const PostListView({
     Key? key,
     required this.sTitle,
     required this.sBody,
     required this.iPosicion,
-    required this.fOnItemTap
+    required this.fOnItemTap,
+    required this.fOnItemLongPressed
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () => fOnItemTap!(iPosicion),
+      onLongPress: () => fOnItemLongPressed!(iPosicion),
       child: Container(
         padding: const EdgeInsets.all(16),
         decoration: BoxDecoration(

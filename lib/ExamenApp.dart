@@ -2,6 +2,7 @@ import 'package:examen_oscar_rueda/Main/PostView.dart';
 import 'package:examen_oscar_rueda/Main/HomeView.dart';
 import 'package:flutter/material.dart';
 import 'Main/PostCreateView.dart';
+import 'Main/PostEditView.dart';
 import 'Modos/DarkMode.dart';
 import 'Modos/LightMode.dart';
 import 'OnBoarding/LoginView.dart';
@@ -17,12 +18,13 @@ class ExamenApp extends StatelessWidget {
       title: 'Examen Oscar Rueda Kollmer',
       debugShowCheckedModeBanner: false,
       routes: {
-        '/loginview': (context) => LoginView(),
-        '/registerview': (context) => RegisterView(),
-        '/homeview' : (context) => HomeView(),
+        '/loginview': (context) => const LoginView(),
+        '/registerview': (context) => const RegisterView(),
+        '/homeview' : (context) => const HomeView(),
         '/splashview': (context) => SplashView(),
         '/postview': (context) => PostView(),
         '/postcreateview': (context) => PostCreateView(),
+        '/posteditview': (context) => PostEditView(),
       },
       initialRoute: '/splashview',
       theme: LightMode,
