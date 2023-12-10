@@ -29,33 +29,45 @@ class _HomeViewState extends State<HomeView> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Theme.of(context).colorScheme.background,
-      appBar: AppBar(
-        title: Text("H O M E",
-          style: TextStyle(
-            color: Theme.of(context).colorScheme.inversePrimary
-        )
-      ),
-        centerTitle: true,
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-      ),
-      body: listOrGrid(blIsList),
-      drawer: CustomDrawer(fOnItemTap: onDrawerPressed),
-      bottomNavigationBar: CustomBottomMenu(fOnItemTap: onBottomMenuPressed),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Navigator.of(context).pushNamed("/postcreateview");
-        },
-        elevation: 0,
-        backgroundColor: Theme.of(context).colorScheme.secondary,
-        child: Icon(
-          Icons.add,
-          color: Theme.of(context).colorScheme.inversePrimary,
+    return RefreshIndicator(
+      onRefresh: onRefresh,
+      color: Theme.of(context).colorScheme.primary,
+      backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+      child: Scaffold(
+        backgroundColor: Theme.of(context).colorScheme.background,
+        appBar: AppBar(
+          title: Text(
+            "H O M E",
+            style: TextStyle(
+              color: Theme.of(context).colorScheme.inversePrimary,
+            ),
+          ),
+          centerTitle: true,
+          backgroundColor: Colors.transparent,
+          elevation: 0,
+        ),
+        body: listOrGrid(blIsList),
+        drawer: CustomDrawer(fOnItemTap: onDrawerPressed),
+        bottomNavigationBar: CustomBottomMenu(fOnItemTap: onBottomMenuPressed),
+        floatingActionButton: FloatingActionButton(
+          onPressed: () {
+            Navigator.of(context).pushNamed("/postcreateview");
+          },
+          elevation: 0,
+          backgroundColor: Theme.of(context).colorScheme.secondary,
+          child: Icon(
+            Icons.add,
+            color: Theme.of(context).colorScheme.inversePrimary,
+          ),
         ),
       ),
     );
+  }
+
+  // Espera a cargarPosts()
+
+  Future<void> onRefresh() async {
+    await cargarPosts();
   }
 
   // Gestion de los botones del Drawer
@@ -141,7 +153,6 @@ class _HomeViewState extends State<HomeView> {
 
   Future<void> cargarPosts() async {
     futurePosts = DataHolder().fbadmin.descargarPosts();
-
     List<FbPost> listaPosts = await futurePosts;
     setState(() {
       posts.clear();

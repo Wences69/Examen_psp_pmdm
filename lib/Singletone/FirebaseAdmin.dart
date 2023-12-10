@@ -105,8 +105,8 @@ class FirebaseAdmin {
 
   void subirPost(FbPost postNuevo) async {
     CollectionReference<FbPost> postsRef = db.collection("Posts").withConverter(
-        fromFirestore: FbPost.fromFirestore,
-        toFirestore: (FbPost post, _) => post.toFirestore(),
+      fromFirestore: FbPost.fromFirestore,
+      toFirestore: (FbPost post, _) => post.toFirestore(),
     );
 
     await postsRef.add(postNuevo);
@@ -114,34 +114,37 @@ class FirebaseAdmin {
 
   // Editar posts
 
-  void editarPost(String title, String body) {
-    // Realiza la consulta para encontrar el post con el título específico
-    FirebaseFirestore.instance
-        .collection('Posts')
-        .where('title', isEqualTo: DataHolder().selectedPost.title.trim())
-        .where('body', isEqualTo: DataHolder().selectedPost.body.trim())
-        .get()
-        .then((QuerySnapshot querySnapshot) {
-      if (querySnapshot.docs.isNotEmpty) {
-        // Se encontró al menos un documento con el título y cuerpo especificado
+  Future<void> editarPost(String title, String body) async {
+    try {
+      // Realiza la consulta para encontrar el post con el título y cuerpo específicos
+      QuerySnapshot querySnapshot = await FirebaseFirestore.instance
+          .collection('Posts')
+          .where('title', isEqualTo: DataHolder().selectedPost.title)
+          .where('body', isEqualTo: DataHolder().selectedPost.body)
+          .get();
+
+      // Verifica si hay al menos un documento
+      if (querySnapshot.size > 0) {
+        // Suponemos que solo hay un documento con esos criterios, puedes ajustar si no es el caso
         String postId = querySnapshot.docs.first.id;
+        print('ID del documento encontrado: $postId');
 
         // Edita el post con el id encontrado
         FirebaseFirestore.instance.collection('Posts').doc(postId).update(
           {
-            "title": title,
-            "body": body,
+            "title": title.trim(),
+            "body": body.trim(),
           },
-        ).then((value) {
-          print('Post editado exitosamente');
-        }).catchError((error) {
-          print('Error al editar el post: $error');
-        });
+        );
+
+        print('Post editado exitosamente');
       } else {
-        // No se encontraron documentos con el título especificado
+        // No se encontraron documentos con el título y cuerpo especificados
+        print('No se encontraron documentos con el título y cuerpo especificados');
       }
-    }).catchError((error) {
-      print('Error al realizar la consulta: $error');
-    });
+    } catch (error) {
+      print('Error al realizar la consulta o editar el post: $error');
+    }
   }
+
 }
