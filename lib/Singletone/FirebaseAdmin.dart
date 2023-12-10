@@ -1,6 +1,8 @@
+import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:examen_oscar_rueda/FirestoreObjects/FbPost.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 
 import 'DataHolder.dart';
 
@@ -103,7 +105,7 @@ class FirebaseAdmin {
 
   // Subir posts
 
-  void subirPost(FbPost postNuevo) async {
+  Future<void> subirPost(FbPost postNuevo) async {
     CollectionReference<FbPost> postsRef = db.collection("Posts").withConverter(
       fromFirestore: FbPost.fromFirestore,
       toFirestore: (FbPost post, _) => post.toFirestore(),
@@ -147,4 +149,29 @@ class FirebaseAdmin {
     }
   }
 
+  // Cambiar foto de perfil
+
+  Future<void> editarFotoPerfil(File _imagePreview) async {
+    final storageRef = FirebaseStorage.instance.ref();
+
+    String? rutaNube = "${DataHolder().fbadmin.getCurrentUserID()}/img_perfil.png";
+    print("RUTA DONDE VA A GUARDARSE LA IMAGEN: "+rutaNube);
+    final rutaAFicheroEnNube = storageRef.child(rutaNube);
+
+    final metadata = SettableMetadata(contentType: "image/jpeg");
+    try {
+      await rutaAFicheroEnNube.putFile(_imagePreview,metadata);
+    } on FirebaseException catch (e) {
+      print("ERROR AL SUBIR IMAGEN: "+e.toString());
+      // ...
+    }
+    print("SE HA SUBIDO LA IMAGEN");
+    String imgUrl=await rutaAFicheroEnNube.getDownloadURL();
+    print("URL DE DESCARGA: "+imgUrl);
+  }
+
+  Future<String> getLinkAvatar() async {
+    Reference ref = FirebaseStorage.instance.ref().child("${DataHolder().fbadmin.getCurrentUserID()}/img_perfil.png");
+    return await ref.getDownloadURL();
+  }
 }

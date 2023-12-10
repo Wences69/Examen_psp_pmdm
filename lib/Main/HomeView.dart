@@ -3,6 +3,7 @@ import 'package:examen_oscar_rueda/CustomViews/CustomDrawer.dart';
 import 'package:examen_oscar_rueda/CustomViews/PostGridView.dart';
 import 'package:examen_oscar_rueda/CustomViews/PostListView.dart';
 import 'package:examen_oscar_rueda/Singletone/DataHolder.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -20,11 +21,14 @@ class _HomeViewState extends State<HomeView> {
   final List<FbPost> posts = [];
   late Future<List<FbPost>> futurePosts;
   bool blIsList = true;
+  Reference  ref = FirebaseStorage.instance.ref().child("${DataHolder().fbadmin.getCurrentUserID()}/img_perfil.png");
+  String fotoPerfil="";
 
   @override
   void initState() {
     super.initState();
     cargarPosts();
+    fotoPerfilDrawer();
   }
 
   @override
@@ -47,7 +51,7 @@ class _HomeViewState extends State<HomeView> {
           elevation: 0,
         ),
         body: listOrGrid(blIsList),
-        drawer: CustomDrawer(fOnItemTap: onDrawerPressed),
+        drawer: CustomDrawer(fOnItemTap: onDrawerPressed, fOnProfilePictureTap: onDrawerProfilePressed, url: fotoPerfil),
         bottomNavigationBar: CustomBottomMenu(fOnItemTap: onBottomMenuPressed),
         floatingActionButton: FloatingActionButton(
           onPressed: () {
@@ -70,20 +74,31 @@ class _HomeViewState extends State<HomeView> {
     await cargarPosts();
   }
 
+  // Consigue la url de la foto de perfil
+
+  Future<void> fotoPerfilDrawer() async {
+    fotoPerfil = await DataHolder().fbadmin.getLinkAvatar();
+  }
   // Gestion de los botones del Drawer
 
   void onDrawerPressed(int indice) async {
     if (indice == 0) {
       Navigator.pop(context);
     } else if (indice == 1) {
-      // Lógica para el botón 1 del Drawer
+      Navigator.of(context).pushNamed("/settingsview");
     } else if (indice == 2) {
       DataHolder().fbadmin.cerrarSesion();
       Navigator.of(context).pushAndRemoveUntil(
         MaterialPageRoute(builder: (BuildContext context) => const LoginView()),
-        ModalRoute.withName('/loginview'),
+        ModalRoute.withName("/loginview"),
       );
     }
+  }
+
+  // Gestion de el cambio de imagen de perfil
+
+  void onDrawerProfilePressed() {
+    Navigator.of(context).pushNamed("/profileimagechangeview");
   }
 
   // Gestion de los botones del BottomMenu
@@ -111,9 +126,7 @@ class _HomeViewState extends State<HomeView> {
 
   void onPostLongPressed(int index) {
     DataHolder().selectedPost = posts[index];
-    DataHolder().selectedPostIdex = index;
     Navigator.of(context).pushNamed("/posteditview");
-    print("Índice del post presionado: $index");
   }
 
   // Creador de items en forma de celda

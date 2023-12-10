@@ -4,12 +4,16 @@ class CustomDrawer extends StatelessWidget {
   final List<Widget> children;
   final String sName;
   final String sUsername;
+  final String url;
   final void Function(int indice)? fOnItemTap;
+  final void Function()? fOnProfilePictureTap; // Nuevo callback para la foto de perfil
 
   const CustomDrawer({
     Key? key,
     required this.fOnItemTap,
+    this.fOnProfilePictureTap, // Agrega este callback
     this.children = const [],
+    required this.url,
     this.sName = "Invitado",
     this.sUsername = "Usuario Invitado",
   }) : super(key: key);
@@ -33,11 +37,11 @@ class CustomDrawer extends StatelessWidget {
                   color: Theme.of(context).colorScheme.inversePrimary,
                 ),
               ),
-              currentAccountPicture: CircleAvatar(
-                backgroundColor: Theme.of(context).colorScheme.secondary,
-                child: Icon(
-                  Icons.person,
-                  color: Theme.of(context).colorScheme.inversePrimary,
+              currentAccountPicture: GestureDetector(
+                onTap: fOnProfilePictureTap,
+                child: CircleAvatar(
+                  backgroundColor: Theme.of(context).colorScheme.secondary,
+                  child: _buildProfilePicture(context),
                 ),
               ),
               decoration: BoxDecoration(
@@ -106,5 +110,16 @@ class CustomDrawer extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  Widget _buildProfilePicture(BuildContext context) {
+    if (url.isNotEmpty) {
+      return Image.network(url, fit: BoxFit.cover);
+    } else {
+      return Icon(
+        Icons.person,
+        color: Theme.of(context).colorScheme.onBackground,
+      );
+    }
   }
 }

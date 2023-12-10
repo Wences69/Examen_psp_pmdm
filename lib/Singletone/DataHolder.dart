@@ -9,7 +9,6 @@ class DataHolder {
   FirebaseAdmin fbadmin=FirebaseAdmin();
 
   late FbPost selectedPost;
-  late int selectedPostIdex;
 
   void initDataHolder() {}
 
